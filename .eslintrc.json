@@ -36,6 +36,12 @@
         "semi": [
             "error",
             "always"
+        ],
+        "@typescript-eslint/no-non-null-assertion": [
+            "off"
+        ],
+        "no-trailing-spaces": [
+            "error"
         ]
     }
 }
