@@ -13,6 +13,6 @@ export function Button(props: ButtonProps): JSX.Element {
 	} = props;
 
 	return (
-		<button className={styles.button} onClick={onClick}>{label}</button>
+		<button role="button" className={styles.button} onClick={onClick}>{label}</button>
 	);
 }
