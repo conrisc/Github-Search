@@ -30,7 +30,6 @@ export function useUsers(username: string = ''): UsersResult {
 			})
 			.finally(() => {
 				setLoading(false);
-				console.log('Current users: ', users);
 			});
 
 	}, [username]);
