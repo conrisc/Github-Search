@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styles from './ListItem.module.sass';
+import arrowRightIcon from 'assets/arrowRightIcon.svg';
 
 interface ListItemProps {
 	label: string | JSX.Element;
@@ -16,7 +17,12 @@ export function ListItem(props: ListItemProps): JSX.Element {
 			onClick={onClick ? (e) => onClick(e, item) : undefined}
 			className={`${styles.item} ${onClick ? styles.clickable : ''}`}
 		>
-			{label}
+			<div className={styles.label}>
+				{label}
+			</div>
+			<div>
+				<img src={arrowRightIcon} alt="" height="24" />
+			</div>
 		</div>
 	);
 }
