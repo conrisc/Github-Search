@@ -22,17 +22,17 @@ beforeEach(() => {
 describe('UserBrowser component', () => {
 	test('should show loading indicator when users are fetched', async () => {
 		const inputValue = 'Hello';
-		const { container, getByText } = render(<UserBrowser />);
+		const { container, getByLabelText } = render(<UserBrowser />);
 
 		const input = container.querySelector('input');
 		expect(input).toBeInTheDocument();
 		fireEvent.change(input!, { target: { value: inputValue } });
 		fireEvent.keyDown(input!, { key: 'Enter', code: 'Enter' });
 
-		const loadingMsg = getByText('Loading users...');
-		expect(loadingMsg).toBeInTheDocument();
+		const loadingIndicator = getByLabelText('Loading');
+		expect(loadingIndicator).toBeInTheDocument();
 		await waitFor(() =>
-			expect(loadingMsg).not.toBeInTheDocument()
+			expect(loadingIndicator).not.toBeInTheDocument()
 		);
 	});
 
