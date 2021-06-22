@@ -29,6 +29,8 @@ export function UserBrowser(): JSX.Element {
 		})
 	);
 
+	const emptyListMsg: string = username ? `We couldn't find anything like ${username}` : '';
+
 	return (
 		<div>
 			<SearchBar onSearch={onSearch} />
@@ -37,7 +39,7 @@ export function UserBrowser(): JSX.Element {
 					? <p>Loading users...</p>
 					: selectedUser
 						? <UserDetails user={selectedUser} />
-						: <SimpleList data={userListRows} onRowClick={onRowClick} />
+						: <SimpleList data={userListRows} onRowClick={onRowClick} emptyListMsg={emptyListMsg} />
 				}
 			</div>
 		</div>

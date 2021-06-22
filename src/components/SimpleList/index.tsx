@@ -13,11 +13,17 @@ export interface Row {
 interface SimpleListProps {
 	header?: string | JSX.Element;
 	data: Row[];
+	emptyListMsg?: string;
 	onRowClick?(event: React.MouseEvent, item: any): void;
 }
 
 export function SimpleList(props: SimpleListProps): JSX.Element {
-	const { header, data, onRowClick } = props;
+	const {
+		header,
+		data,
+		emptyListMsg,
+		onRowClick
+	} = props;
 
 	return (
 		<div className={styles.listContainer}>
@@ -29,9 +35,9 @@ export function SimpleList(props: SimpleListProps): JSX.Element {
 					?  data.map((r: Row) =>
 						<ListItem key={r.id} label={r.label} item={r.item} onClick={onRowClick} />
 					)
-					: (
+					: emptyListMsg && (
 						<div className={styles.emptyListContainer}>
-							<h3>The list is empty</h3>
+							<h3>{emptyListMsg}</h3>
 							<img className={styles.emptyListSvg} src={emptySvg} alt="List is empty" />
 						</div>
 					)
