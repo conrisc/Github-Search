@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Input.module.sass';
 
 interface InputProps {
-	prefix?: string;
+	prefix?: string | JSX.Element;
 	placeholder?: string;
 	defaultValue?: string;
 	onChange?(event?: React.ChangeEvent<HTMLInputElement>): void;
