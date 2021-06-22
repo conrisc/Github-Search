@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 
+import styles from './UserBrowser.module.sass';
 import { SearchBar } from 'components/SearchBar';
 import { SimpleList, Row } from 'components/SimpleList';
+import { UserDetails } from 'components/UserDetails';
 import { useUsers } from 'hooks/useUsers';
 import { User } from 'types/User';
 
 export function UserBrowser(): JSX.Element {
 	const [username, setUsername] = useState<string>('');
+	const [selectedUser, setSelectedUser] = useState<User | undefined>();
 	const { users, loading } = useUsers(username);
 
 	const onSearch = (newUsername: string) => {
+		setSelectedUser(undefined);
 		setUsername(newUsername);
 	};
 
 	const onRowClick = (event: React.MouseEvent, user: User) => {
-		alert('Clicked user: ' + user.login);
+		setSelectedUser(user);
 	};
 
 	const userListRows: Row[] = users.map(
@@ -28,10 +32,14 @@ export function UserBrowser(): JSX.Element {
 	return (
 		<div>
 			<SearchBar onSearch={onSearch} />
-			{loading
-				? <p>Loading users...</p>
-				: <SimpleList data={userListRows} onRowClick={onRowClick} />
-			}
+			<div className={styles.content}>
+				{loading
+					? <p>Loading users...</p>
+					: selectedUser
+						? <UserDetails user={selectedUser} />
+						: <SimpleList data={userListRows} onRowClick={onRowClick} />
+				}
+			</div>
 		</div>
 	);
 }

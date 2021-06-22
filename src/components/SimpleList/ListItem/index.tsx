@@ -4,11 +4,11 @@ import styles from './ListItem.module.sass';
 interface ListItemProps {
 	label: string | JSX.Element;
 	item: any;
-	onClick(event: React.MouseEvent, item: any): void;
+	onClick?(event: React.MouseEvent, item: any): void;
 }
 
 export function ListItem(props: ListItemProps): JSX.Element {
-	const { label, item, onClick } = props;
+	const { label, item, onClick = () => undefined } = props;
 
 	return (
 		<div onClick={(e) => onClick(e, item)} className={styles.item}>

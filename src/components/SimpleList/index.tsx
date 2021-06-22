@@ -12,16 +12,16 @@ export interface Row {
 interface SimpleListProps {
 	header?: string | JSX.Element;
 	data: Row[];
-	onRowClick(event: React.MouseEvent, item: any): void;
+	onRowClick?(event: React.MouseEvent, item: any): void;
 }
 
 export function SimpleList(props: SimpleListProps): JSX.Element {
-	const { header, data, onRowClick } = props;
+	const { header, data, onRowClick = () => undefined } = props;
 
 	return (
 		<div className={styles.listContainer}>
 			{header &&
-				<div className={styles.listHeader}>{header}</div>
+				<h3 className={styles.listHeader}>{header}</h3>
 			}
 			<div className={styles.listContent}>
 				{data.map((r: Row) =>
