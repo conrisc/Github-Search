@@ -52,7 +52,12 @@ export function UserDetails(props: UserDetailsProps): JSX.Element {
 					<h3>About</h3>
 					<p>{bio || 'No description'}</p>
 				</div>
-				<SimpleList data={mostPopularRepos} header="Top repositories" onRowClick={onRepoClick} />
+				<SimpleList
+					data={mostPopularRepos}
+					header="Top repositories"
+					onRowClick={onRepoClick}
+					emptyListMsg={mostPopularRepos.length === 0 ? 'No repositories found' : ''}
+				/>
 			</div>
 		);
 }
