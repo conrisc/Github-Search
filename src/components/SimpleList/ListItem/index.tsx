@@ -8,10 +8,13 @@ interface ListItemProps {
 }
 
 export function ListItem(props: ListItemProps): JSX.Element {
-	const { label, item, onClick = () => undefined } = props;
+	const { label, item, onClick } = props;
 
 	return (
-		<div onClick={(e) => onClick(e, item)} className={styles.item}>
+		<div
+			onClick={onClick ? (e) => onClick(e, item) : undefined}
+			className={`${styles.item} ${onClick ? styles.clickable : ''}`}
+		>
 			{label}
 		</div>
 	);

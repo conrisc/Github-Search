@@ -16,7 +16,7 @@ interface SimpleListProps {
 }
 
 export function SimpleList(props: SimpleListProps): JSX.Element {
-	const { header, data, onRowClick = () => undefined } = props;
+	const { header, data, onRowClick } = props;
 
 	return (
 		<div className={styles.listContainer}>
