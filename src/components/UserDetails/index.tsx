@@ -1,25 +1,25 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import styles from './UserDetails.module.sass';
 import { SimpleList, Row } from 'components/SimpleList';
 import { Spinner } from 'components/Spinner';
 import { useUser } from 'hooks/useUser';
 import { useRepos } from 'hooks/useRepos';
-import { User } from 'types/User';
 import { RepoDetails } from 'types/Repo';
 import { openInNewTab } from 'utils/openInNewTab';
 import booksIcon from 'assets/booksIcon.svg';
 
-interface UserDetailsProps {
-	user: User;
-}
-
 const repoComparator = (r1: RepoDetails, r2: RepoDetails) => r1.stargazers_count < r2.stargazers_count ? 1 : -1;
 
-export function UserDetails(props: UserDetailsProps): JSX.Element {
-	const { user } = props;
-	const { user: userDetails, loading: loadingUserDetails } = useUser(user.login);
-	const { repos, loading: loadingUserRepos } = useRepos(user.login);
+interface UserDetailsParams {
+	login: string;
+}
+
+export function UserDetails(): JSX.Element {
+	const { login } = useParams<UserDetailsParams>();
+	const { user: userDetails, loading: loadingUserDetails } = useUser(login);
+	const { repos, loading: loadingUserRepos } = useRepos(login);
 
 	const {
 		avatar_url = '',

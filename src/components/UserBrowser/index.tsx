@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
 
 import styles from './UserBrowser.module.sass';
 import { SearchBar } from 'components/SearchBar';
@@ -10,16 +11,17 @@ import { Spinner } from 'components/Spinner';
 
 export function UserBrowser(): JSX.Element {
 	const [username, setUsername] = useState<string>('');
-	const [selectedUser, setSelectedUser] = useState<User | undefined>();
 	const { users, loading } = useUsers(username);
+	const { path } = useRouteMatch();
+	const history = useHistory();
 
 	const onSearch = (newUsername: string) => {
-		setSelectedUser(undefined);
+		history.push(path);
 		setUsername(newUsername);
 	};
 
 	const onRowClick = (event: React.MouseEvent, user: User) => {
-		setSelectedUser(user);
+		history.push(`${path}/${user.login}`);
 	};
 
 	const userListRows: Row[] = users.map(
@@ -38,9 +40,16 @@ export function UserBrowser(): JSX.Element {
 			<div className={styles.content}>
 				{loading
 					? <div className="align-center"><Spinner /></div>
-					: selectedUser
-						? <UserDetails user={selectedUser} />
-						: <SimpleList data={userListRows} onRowClick={onRowClick} emptyListMsg={emptyListMsg} />
+					: (
+						<Switch>
+							<Route exact path={path}>
+								<SimpleList data={userListRows} onRowClick={onRowClick} emptyListMsg={emptyListMsg} />
+							</Route>
+							<Route path={`${path}/:login`}>
+								<UserDetails />
+							</Route>
+						</Switch>
+					)
 				}
 			</div>
 		</div>
