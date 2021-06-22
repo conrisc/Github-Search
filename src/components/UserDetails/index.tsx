@@ -7,6 +7,7 @@ import { useRepos } from 'hooks/useRepos';
 import { User } from 'types/User';
 import { RepoDetails } from 'types/Repo';
 import { openInNewTab } from 'utils/openInNewTab';
+import booksIcon from 'assets/booksIcon.svg';
 
 interface UserDetailsProps {
 	user: User;
@@ -32,7 +33,12 @@ export function UserDetails(props: UserDetailsProps): JSX.Element {
 			.slice(0, 4)
 			.map(repo => ({
 				id: repo.id,
-				label: repo.name,
+				label: (
+					<>
+						<img src={booksIcon} alt="Repository" />
+						{repo.name}
+					</>
+				),
 				item: repo
 			}));
 
