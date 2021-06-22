@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import styles from './UserDetails.module.sass';
 import { SimpleList, Row } from 'components/SimpleList';
@@ -18,8 +18,13 @@ interface UserDetailsParams {
 
 export function UserDetails(): JSX.Element {
 	const { login } = useParams<UserDetailsParams>();
-	const { user: userDetails, loading: loadingUserDetails } = useUser(login);
-	const { repos, loading: loadingUserRepos } = useRepos(login);
+	const { user: userDetails, loading: loadingUserDetails, error: userError } = useUser(login);
+	const { repos, loading: loadingUserRepos, error: reposError } = useRepos(login);
+	const history = useHistory();
+
+	if (userError || reposError) {
+		history.push('/search');
+	}
 
 	const {
 		avatar_url = '',
