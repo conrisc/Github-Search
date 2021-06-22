@@ -6,6 +6,7 @@ import { SimpleList, Row } from 'components/SimpleList';
 import { UserDetails } from 'components/UserDetails';
 import { useUsers } from 'hooks/useUsers';
 import { User } from 'types/User';
+import { Spinner } from 'components/Spinner';
 
 export function UserBrowser(): JSX.Element {
 	const [username, setUsername] = useState<string>('');
@@ -36,7 +37,7 @@ export function UserBrowser(): JSX.Element {
 			<SearchBar onSearch={onSearch} />
 			<div className={styles.content}>
 				{loading
-					? <p>Loading users...</p>
+					? <div className="align-center"><Spinner /></div>
 					: selectedUser
 						? <UserDetails user={selectedUser} />
 						: <SimpleList data={userListRows} onRowClick={onRowClick} emptyListMsg={emptyListMsg} />

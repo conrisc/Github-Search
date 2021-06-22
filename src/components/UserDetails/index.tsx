@@ -2,6 +2,7 @@ import React from 'react';
 
 import styles from './UserDetails.module.sass';
 import { SimpleList, Row } from 'components/SimpleList';
+import { Spinner } from 'components/Spinner';
 import { useUser } from 'hooks/useUser';
 import { useRepos } from 'hooks/useRepos';
 import { User } from 'types/User';
@@ -47,7 +48,7 @@ export function UserDetails(props: UserDetailsProps): JSX.Element {
 	};
 
 	return (loadingUserDetails || loadingUserRepos)
-		? <p>Loading user details...</p>
+		? <div className="align-center"><Spinner /></div>
 		: (
 			<div>
 				<div className={styles.header}>
