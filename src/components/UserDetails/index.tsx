@@ -1,17 +1,22 @@
 import React from 'react';
 
 import styles from './UserDetails.module.sass';
-import { SimpleList } from 'components/SimpleList';
+import { SimpleList, Row } from 'components/SimpleList';
 import { useUser } from 'hooks/useUser';
+import { useRepos } from 'hooks/useRepos';
 import { User } from 'types/User';
+import { RepoDetails } from 'types/Repo';
 
 interface UserDetailsProps {
 	user: User;
 }
 
+const repoComparator = (r1: RepoDetails, r2: RepoDetails) => r1.stargazers_count < r2.stargazers_count ? 1 : -1;
+
 export function UserDetails(props: UserDetailsProps): JSX.Element {
 	const { user } = props;
-	const { user: userDetails, loading } = useUser(user.login);
+	const { user: userDetails, loading: loadingUserDetails } = useUser(user.login);
+	const { repos, loading: loadingUserRepos } = useRepos(user.login);
 
 	const {
 		avatar_url = '',
@@ -19,7 +24,18 @@ export function UserDetails(props: UserDetailsProps): JSX.Element {
 		bio = '',
 	} = userDetails || {};
 
-	return loading
+	const mostPopularRepos: Row[] = loadingUserRepos
+		? []
+		: repos
+			.sort(repoComparator)
+			.slice(0, 4)
+			.map(repo => ({
+				id: repo.id,
+				label: repo.name,
+				item: repo
+			}));
+
+	return (loadingUserDetails || loadingUserRepos)
 		? <p>Loading user details...</p>
 		: (
 			<div>
@@ -31,7 +47,7 @@ export function UserDetails(props: UserDetailsProps): JSX.Element {
 					<h3>About</h3>
 					<p>{bio || 'No description'}</p>
 				</div>
-				<SimpleList data={[]} header="Top repositories" />
+				<SimpleList data={mostPopularRepos} header="Top repositories" />
 			</div>
 		);
 }
