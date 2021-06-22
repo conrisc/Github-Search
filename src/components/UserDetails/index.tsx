@@ -6,6 +6,7 @@ import { useUser } from 'hooks/useUser';
 import { useRepos } from 'hooks/useRepos';
 import { User } from 'types/User';
 import { RepoDetails } from 'types/Repo';
+import { openInNewTab } from 'utils/openInNewTab';
 
 interface UserDetailsProps {
 	user: User;
@@ -35,6 +36,10 @@ export function UserDetails(props: UserDetailsProps): JSX.Element {
 				item: repo
 			}));
 
+	const onRepoClick = (event: React.MouseEvent, repo: RepoDetails) => {
+		openInNewTab(repo.html_url);
+	};
+
 	return (loadingUserDetails || loadingUserRepos)
 		? <p>Loading user details...</p>
 		: (
@@ -47,7 +52,7 @@ export function UserDetails(props: UserDetailsProps): JSX.Element {
 					<h3>About</h3>
 					<p>{bio || 'No description'}</p>
 				</div>
-				<SimpleList data={mostPopularRepos} header="Top repositories" />
+				<SimpleList data={mostPopularRepos} header="Top repositories" onRowClick={onRepoClick} />
 			</div>
 		);
 }
