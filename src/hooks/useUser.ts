@@ -25,7 +25,7 @@ export function useUser(username: string = ''): UserResult {
 				setUser(usersData);
 			})
 			.catch(() => {
-				console.error('Couldn\'t fetch user');
+				console.error('Couldn\'t fetch the user');
 			})
 			.finally(() => {
 				setLoading(false);
